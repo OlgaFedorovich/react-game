@@ -1,0 +1,28 @@
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 50px;
+    font-weight: 900;
+    text-shadow: black 0px 0px 5px;
+}
+
+.header-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px black;
+}
+
+.header-button i {
+    font-size: 40px;
+    font-weight: 700;
+}

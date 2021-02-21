@@ -1,0 +1,33 @@
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    transition: all 1s;
+}
+
+.game-container.classic {
+    background: url('./../../assets/images/classic-2.jpg') no-repeat center center/cover;
+}
+
+.game-container.react-angular {
+    background: url('./../../assets/images/react-angular4.png') no-repeat center center/cover;
+}
+
+.game-container.sun-moon {
+    background: url('./../../assets/images/sun-moon.jpg') no-repeat center center/cover;
+}
+
+.game-container.fruits-veggies {
+    background: url('./../../assets/images/fruits-vetegables.jpg') no-repeat center center/cover;
+}
+
+.game-wrapper {
+    width: 70%;
+    height: 100vh;
+    margin: 0 auto;
+    background: rgba(236, 231, 231, 0.5);
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 10px black;
+    flex-direction: column;
+    padding: 10px;
+}
