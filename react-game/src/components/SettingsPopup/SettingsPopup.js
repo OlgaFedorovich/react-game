@@ -69,6 +69,7 @@ const SettingsPopup = (props) => {
                 <option value="react-angular">Rect vs Angular</option>
                 <option value="sun-moon">Sun vs Moon</option>
                 <option value="fruits-veggies">Fruits vs Veggies</option>
+                <option value="tom-djerry">Tom vs Jerry</option>
             </select>
         </div>
     )

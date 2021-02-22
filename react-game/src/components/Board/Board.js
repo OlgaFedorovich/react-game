@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import './Board.css';
 import {SettingsContext} from './../App/App';
 
@@ -6,43 +6,57 @@ const initMatrix = [];
 const Board = (props) => {
 
     const {mode, level, move, theme} = useContext(SettingsContext);
-    
+
+    const {currentPlayer, changeCurrentPlayer, increaseMovesCount, resetMovesCount, movesCount} = props;
+    let matrixSize = +level;
     
     const [matrix, setMatrix] = useState(initMatrix);
-    const [matrixSize, setMatrixSize] = useState(props.matrixSize);
-    const [currentPlayer, setCurrentPlayer] = useState('O');
+    //const [currentPlayer, setCurrentPlayer] = useState('O');
     const [selectedRow, setSelectedRow] = useState(null);
     const [selectedColumn, setSelectedColumn] = useState(null);
     const [winner, setWinner] = useState(false);
-    const [reset, setReset] = useState(false);
-
-    console.log(props);
-
-    useEffect(()=> {
-        setWinner(false);
-        setSelectedColumn(null);
-        setSelectedRow(null);
-
-        const row = new Array(matrixSize).fill(null);
-
-        const tempMatrix = [];
-
-        for(let i = 0; i < matrixSize; i++) {
-            tempMatrix.push([...row]);
-        }
-
-        setMatrix(tempMatrix);
-        //console.log('rerender');
-
-    }, [reset, matrixSize]);
+    const [newGame, setNewGame] = useState(true);
+    const [usersMove, setUsersMove] = useState(true);
 
     useEffect(()=> {
-        if(matrixSize !== props.matrixSize) {
-            setMatrixSize(props.matrixSize);
-        }
-        console.log('rerender');
+        if(newGame === true) {
+            setMatrix(initMatrix);
+            setWinner(false);
+            setSelectedColumn(null);
+            setSelectedRow(null);
+            
+            const row = new Array(matrixSize).fill(null);
 
-    });
+            const tempMatrix = [];
+
+            for(let i = 0; i < matrixSize; i++) {
+                tempMatrix.push([...row]);
+            }
+
+            setMatrix(tempMatrix);            
+        }
+    }, [newGame, matrixSize]);
+
+    useEffect(()=> {
+        setNewGame(true);
+    }, [mode, level, move, matrixSize]);
+
+    useEffect(()=> {
+        if(newGame === true) {
+            resetMovesCount();
+        }
+    }, [newGame, resetMovesCount]);
+
+
+    // useEffect(() => {
+    //     if(mode === 'computer') {
+    //         if
+
+
+    //     }
+
+
+    // }, [usersMove, mode]);
 
     const squareClick = (indRow, indCol) => {
         console.log(indRow, indCol);
@@ -51,14 +65,52 @@ const Board = (props) => {
         setSelectedRow(indRow);
 
         if(!matrix[indRow][indCol] && !winner) {
+            increaseMovesCount();
             let nextPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            setCurrentPlayer(nextPlayer);
-
+            // setCurrentPlayer(nextPlayer);
+            changeCurrentPlayer(nextPlayer);
             const matrixCopy = [...matrix];
             matrixCopy[indRow][indCol] = nextPlayer;
             setMatrix(matrixCopy);
         }
+
+        if(newGame === true) {
+            setNewGame(false);
+        }
     };
+
+    useEffect(() => {
+        if(mode === 'computer') {
+            let canUserMove;
+
+            if( move==="false") {
+                canUserMove = movesCount % 2 === 0 ? false : true; 
+            }
+
+            if(move==="true") {
+                canUserMove = movesCount % 2 === 0 ? true : false; 
+            }
+
+            if(canUserMove === false && !winner) {
+                const randomMark = () => {
+                    const indRow = Math.floor(Math.random() * ((matrixSize-1) - 0 + 1)) + 0;
+                    const indCol = Math.floor(Math.random() * ((matrixSize-1) - 0 + 1)) + 0;
+                    console.log(indRow, indCol);
+
+                    if(!matrix[indRow][indCol]) {
+                        squareClick(indRow, indCol);
+                        setUsersMove(true);
+                    } else randomMark();
+                };
+                randomMark();
+            }
+
+            setUsersMove(canUserMove);            
+        }
+
+    }, [movesCount, mode, move]);
+
+
 
     const isWinner = () => {
         let vertical = true;
@@ -93,15 +145,15 @@ const Board = (props) => {
         }
     };
 
+    useEffect(()=> {
+        localStorage.setItem('matrix', JSON.stringify(matrix));
+    }, [matrix]);
+
     useEffect(() => {
         if(!winner) {
             isWinner();
         }
-    });
-
-    const resetGame = () => {
-        setReset(!reset);
-    };
+    }, [currentPlayer]);
 
     const transformMark = (mark) => {
         let markPicture;
@@ -117,7 +169,7 @@ const Board = (props) => {
 
     return(
         <div>
-            <button onClick= {()=>resetGame()}>Reset game</button>
+            <button onClick= {() =>{setNewGame(true)}} >Reset game</button>
             <div className="board_wrapper">
                 {
                     matrix.map((value, indRow) => {
@@ -125,7 +177,11 @@ const Board = (props) => {
                             <div className="board_row">
                                 {value.map((val, indCol)=> {
                                     return (
-                                        <div onClick={()=>squareClick(indRow, indCol)} className="board_column jumbotron">{transformMark(matrix[indRow][indCol])}</div>
+                                        <div onClick={()=>{
+                                            if(!usersMove) return;
+                                            squareClick(indRow, indCol);
+                                        }
+                                        } className="board_column jumbotron">{transformMark(matrix[indRow][indCol])}</div>
                                     )
                                 })}
                             </div>

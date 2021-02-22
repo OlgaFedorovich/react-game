@@ -45,6 +45,10 @@
     background-image: url('./../../assets/images/onion.png');
 }
 
+.o-player.tom-djerry {
+    background-image: url('./../../assets/images/djerry.jpg');
+}
+
 .x-player.sun-moon {
     background-image: url('./../../assets/images/moon.png');
 
@@ -62,6 +66,10 @@
 
 .x-player.fruits-veggies {
     background-image: url('./../../assets/images/pineapple.png');
+}
+
+.x-player.tom-djerry {
+    background-image: url('./../../assets/images/tom.png');
 }
 
 .player-mark {

@@ -1,0 +1,58 @@
+.dashboard {
+    width: 70%;
+    margin-top: 20px;
+}
+
+.dashboard-players {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.move-turn {
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+.dashboard-mark {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-mark {
+    display: block;
+}
+
+.card-body, .card-header {
+    padding: 5px;
+}
+
+.dashboard-move-arrow {
+    width: 80px;
+    height: 40px;
+    background: url('./../../assets/images/right-arrow.png') no-repeat center center/70%;
+    position: absolute;
+    top: 50%;
+    transition: all 1.5s;
+}
+
+.dashboard-move-arrow-right {
+    transform: translate(-80%, -50%) rotate(180deg);
+}
+
+.dashboard-move-arrow-left {
+    transform: translate(80%,-50%);
+}
+
+.move-arrow-wrapper {
+    position: relative;
+}
