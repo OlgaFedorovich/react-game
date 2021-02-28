@@ -4,10 +4,10 @@ import {playingModesObj, levelsObj, firstMoveObj} from './../../data/settingsDat
 
 const SettingsPopup = (props) => {
 
-    const {gameSettings: {mode, level, move, theme}} = props;
+    const {gameSettings: {mode, matrixSize, move, theme}} = props;
 
     const [selectedMode, setSelectedMode] = useState(mode);
-    const [selectedLevel, setSelectedLevel] = useState(level);
+    const [selectedLevel, setSelectedLevel] = useState(matrixSize);
     const [isFirstMoveMine, setIsFirstMoveMine] = useState(move);
     const [selectedGameTheme, setGameTheme] = useState(theme);
 
@@ -34,7 +34,7 @@ const SettingsPopup = (props) => {
     const levelQuestions = (
         <div className = "question-wrapper">
             <p className="text-primary">{levelsObj.title}</p>    
-            <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e)=> setSelectedLevel(e.target.value)}>
+            <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e)=> setSelectedLevel(+e.target.value)}>
             {levelsObj.options.map((option)=> {
                 return (
                     <label className={`btn btn-outline-warning ${+selectedLevel === +option.value ? 'active' : ''}`}>
@@ -70,6 +70,8 @@ const SettingsPopup = (props) => {
                 <option value="sun-moon">Sun vs Moon</option>
                 <option value="fruits-veggies">Fruits vs Veggies</option>
                 <option value="tom-djerry">Tom vs Jerry</option>
+                <option value="djoker-batman">Joker vs Batman</option>
+                <option value="winter-summer">Winter vs Summer</option>
             </select>
         </div>
     )
@@ -77,7 +79,7 @@ const SettingsPopup = (props) => {
     const saveChanges = () => {
         saveGameSettings({
             mode: selectedMode,
-            level: selectedLevel,
+            matrixSize: selectedLevel,
             move: isFirstMoveMine,
             theme: selectedGameTheme
         })

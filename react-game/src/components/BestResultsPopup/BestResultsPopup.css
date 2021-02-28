@@ -1,0 +1,26 @@
+.best-results-layout {
+    width: 100vw;
+    height: 100vh;
+    position:absolute;
+    top:0;
+    left: 0;
+    background: rgba(19, 18, 18, 0.8);
+}
+
+.best-results-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table {
+    width: 80%;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
