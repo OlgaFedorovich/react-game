@@ -15,7 +15,8 @@ const Board = (props) => {
         movesCount, 
         isNewGame, 
         changeStateOfGame,
-        showFinalMessage} = props;
+        showFinalMessage,
+        } = props;
 
     console.log(isNewGame, 'game-status board');
     
@@ -38,7 +39,7 @@ const Board = (props) => {
             createNewMatrix(matrixSize); 
             setIsDraw(false);
             setUsersMove(move ==="true" ? true : false);
-            setWinningCells([]);            
+            setWinningCells([])           
         }
     }, [matrixSize, mode, move]);
 

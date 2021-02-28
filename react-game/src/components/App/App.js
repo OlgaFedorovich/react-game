@@ -8,7 +8,6 @@ import SettingsPopup from './../SettingsPopup/SettingsPopup';
 import BestResultsPopup from './../BestResultsPopup/BestResultsPopup';
 import PlayersDashboard from './../PlayersDashboard/PlayersDashboard';
 import FinalMessage from './../FinalMessage/FinalMessage';
-import {setToLocalStorage, getFromLocalStorage} from './../../data/functions';
 
 export const SettingsContext = React.createContext(null);
 
@@ -39,17 +38,14 @@ const App = () => {
 
     const [winnerPlayer, setWinnerPlayer] = useState('');
 
-    console.log(isNewGame, 'game-status app');
-    console.log(JSON.parse(localStorage.getItem('current-player')));
-    console.log(currentPlayer, 'currentPlaey');
+    const [time, setTime] = useState(JSON.parse(localStorage.getItem('games-time')) || {s: 0, m: 0, h: 0});
+    const [interv, setInterv] = useState();
 
     const showFinalMessage = (winner, draw, moves, currentPlayer) => {
         setWinnerPlayer(currentPlayer);
-        console.log(winner, 'winner', draw, 'draw', moves, 'moves');
         setFinalMessage(true);
         setTimeout(()=>setIsNewGame(true), 9000);
         localStorage.setItem('game-status', JSON.stringify(true));
-        
     };
 
     const hideFinalMessage = () => {
@@ -59,7 +55,7 @@ const App = () => {
     useEffect(()=> {
         if(isNewGame && JSON.parse(localStorage.getItem('game-status')) === true) {
             resetMovesCount();   
-            setCurrentPlayer('O');         
+            setCurrentPlayer('O');       
         }
     }, [isNewGame]);
 
@@ -78,7 +74,6 @@ const App = () => {
         //setToLocalStorage('moves-count', movesCount+1);
         setMovesCount((movesCount) => movesCount + 1);
         localStorage.setItem('moves-count', JSON.stringify(movesCount + 1));
-        
     };
 
     const resetMovesCount = () => {
@@ -91,6 +86,49 @@ const App = () => {
         setIsNewGame(true);
         localStorage.setItem('game-status', JSON.stringify(true));
        localStorage.setItem('settings', JSON.stringify(selectedSettings));
+    };
+
+    let updatedMs = time.ms, 
+        updatedS = time.s, 
+        updatedM = time.m, 
+        updatedH = time.h;
+
+    useEffect(()=> {
+        startTimer();
+        return () => clearInterval(interv);
+    }, []);
+
+    const resetTime = () => {
+        clearInterval(interv);
+        setTime({s:0, m:0, h:0})
+    }
+
+    const startTimer = () => {
+        runTimer();
+        setInterv(setInterval(runTimer, 1000));
+    };
+        
+    const runTimer = () => {
+      if(updatedM === 60){
+        updatedH++;
+        updatedM = 0;
+      }
+      if(updatedS === 60){
+        updatedM++;
+        updatedS = 0;
+      }
+
+      updatedS++;
+
+      localStorage.setItem('games-time', JSON.stringify(
+        {
+            s:updatedS, 
+            m:updatedM, 
+            h:updatedH
+        }
+      ));
+
+      return setTime({ms:updatedMs, s:updatedS, m:updatedM, h:updatedH});
     };
 
     return (
@@ -107,10 +145,12 @@ const App = () => {
                         changeStateOfGame={changeStateOfGame}
                         isNewGame={isNewGame}
                         showFinalMessage={showFinalMessage}
+                        
                     />
                     <PlayersDashboard 
                         currentPlayer={currentPlayer}
-                        movesCount={movesCount}         
+                        movesCount={movesCount}    
+                        time={time}    
                     />
                 </SettingsContext.Provider>
                 <FooterNav
