@@ -10,7 +10,7 @@ const RulesInfoPopup = ({changeRulesInfoVisibility}) => {
                 <div className="card-body">
                     <h5 className="card-title">Video about rules and usage of App</h5>
                 </div>
-                <iframe className="info-video" src="https://www.youtube.com/embed/qwKh4pH7KAk" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                <iframe className="info-video" src="https://www.youtube.com/embed/Ji-2KRitm9k" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                 <h5 className="card-title">Hot keys to control game</h5>
                 <ul className="list-group list-group-flush">
