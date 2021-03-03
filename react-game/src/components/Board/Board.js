@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import './Board.css';
-import {SettingsContext} from './../App/App';
+import {SettingsContext} from '../Game/Game';
 
-const initMatrix = [];
+const initMatrix = [[null, null, null], [null, null, null], [null, null, null]];
 const Board = (props) => {
-
-
-    const {mode, matrixSize, move, theme} = useContext(SettingsContext);
+    const {mode, matrixSize, move, theme, user, opponent} = useContext(SettingsContext);
 
     const {
         currentPlayer, 
@@ -16,22 +14,19 @@ const Board = (props) => {
         isNewGame, 
         changeStateOfGame,
         showFinalMessage,
+        playSound,
         } = props;
-
-    console.log(isNewGame, 'game-status board');
     
     const [matrix, setMatrix] = useState(JSON.parse(localStorage.getItem('matrix')) || initMatrix);
     const [selectedRow, setSelectedRow] = useState(null);
     const [selectedColumn, setSelectedColumn] = useState(null);
     const [winner, setWinner] = useState(false);
-    //const [usersMove, setUsersMove] = useState(JSON.parse(localStorage.getItem('users-move')) || true);
     const [usersMove, setUsersMove] = useState( JSON.parse(localStorage.getItem('users-move')) || (move ==="true" ? true : false));
     const [isDraw, setIsDraw] = useState(false);
     const [winningCells, setWinningCells] = useState([]);
 
     const startNewGame = useCallback(()=> {
         if(isNewGame) {
-            console.log('new game');
             setMatrix(initMatrix);
             setWinner(false);
             setSelectedColumn(null);
@@ -39,7 +34,8 @@ const Board = (props) => {
             createNewMatrix(matrixSize); 
             setIsDraw(false);
             setUsersMove(move ==="true" ? true : false);
-            setWinningCells([])           
+            setWinningCells([]);
+            playSound('reset');
         }
     }, [matrixSize, mode, move]);
 
@@ -50,9 +46,6 @@ const Board = (props) => {
             tempMatrix.push([...row]);
         }
         setMatrix(tempMatrix);
-        if(mode==="autoplay") {
-            console.log(matrix, matrixSize, mode, move, usersMove)
-        }  
     };
 
     const findWinningLine = (vertical, horizontal, diagonal1, diagonal2, selectedColumn, selectedRow) => {
@@ -92,10 +85,17 @@ const Board = (props) => {
     };
 
     const addToBestResults = (moves, winner, size, mode) => {
+        let winnerPlayer;
+        if(move==="true") {
+            winnerPlayer = winner === 'X'? user : opponent;
+        } else {
+        winnerPlayer = winner === 'O' ? user : opponent;
+        } 
+
         const savedBestResults = JSON.parse(localStorage.getItem('best-results')) || [];
         const currentResult = {
             moves: moves,
-            winner: winner,
+            winner: winnerPlayer,
             size: size,
             mode: mode,
             date: new Date().toLocaleDateString()
@@ -141,18 +141,21 @@ const Board = (props) => {
                 }
             }
         }
-        
+
         findWinningLine(vertical, horizontal, diagonal1, diagonal2, selectedColumn, selectedRow);
 
         if(vertical || horizontal || diagonal1 || diagonal2) {
 
             setWinner(true);
             addToBestResults(movesCount, currentPlayer, matrixSize, mode);
-            showFinalMessage(winner, isDraw, movesCount, currentPlayer);
+            showFinalMessage(true, currentPlayer);
+            playSound('winning');
 
         } else {
             if (completedCells === matrixSize * matrixSize) {
                 setIsDraw(true);
+                showFinalMessage(false, currentPlayer);
+                playSound('draw');
             }
         }
     };
@@ -162,24 +165,18 @@ const Board = (props) => {
             isWinner();
         }        
         
-        console.log(move, 'move', usersMove, 'usersMove', isNewGame, 'isnewgame');
-
         if(isNewGame && mode==="computer") {
             if(move==="true" && usersMove === true) {
-                //setUsersMove(true);
                 localStorage.setItem('users-move', JSON.stringify(true));
-                
             }
 
             if(move === "false" && usersMove === false) {
-                //setUsersMove(false);
                 localStorage.setItem('users-move', JSON.stringify(false));
                 setRandomMark();
             }
         }
 
         if(!isNewGame && mode==="computer") {
-            console.log(usersMove, 'users-move');
             if(usersMove === false) {
                 setRandomMark();
             }
@@ -204,6 +201,7 @@ const Board = (props) => {
     }, [isNewGame, startNewGame]);
 
     const squareClick = (indRow, indCol) => {
+        playSound('click');
         setSelectedColumn(indCol);
         setSelectedRow(indRow);
 
@@ -222,15 +220,8 @@ const Board = (props) => {
             changeStateOfGame(false);
         }
 
-        // if(usersMove === true) {
-        //     setUsersMove(false);
-        //     localStorage.setItem('users-move', JSON.stringify(false));
-        // }
-
-        
-            setUsersMove((usersMove) => !usersMove);
-            //localStorage.setItem('users-move', JSON.stringify(false));
-        
+        setUsersMove((usersMove) => !usersMove);
+ 
     };
 
     useEffect(()=> {
@@ -259,13 +250,6 @@ const Board = (props) => {
 
     }, [matrixSize, matrix]);
 
-
-    // useEffect(()=> {
-    //     if(!isNewGame && (winner || isDraw)) {
-    //         showFinalMessage(winner, isDraw, movesCount);
-    //     }
-    // }, [winner, isDraw, isNewGame, showFinalMessage, movesCount])
-
     useEffect(()=> {
         localStorage.setItem('matrix', JSON.stringify(matrix));
     }, [matrix]);
@@ -274,9 +258,9 @@ const Board = (props) => {
     const transformMark = (mark) => {
         let markPicture;
         switch(mark) {
-            case 'X': markPicture = (<span class={`x-player player-mark ${theme}`}></span>) ;
+            case 'X': markPicture = (<span className={`x-player player-mark ${theme}`}></span>) ;
             break;
-            case 'O': markPicture = (<span class={`o-player player-mark ${theme}`}></span>);
+            case 'O': markPicture = (<span className={`o-player player-mark ${theme}`}></span>);
             break;
             default: markPicture = null;
         }
@@ -285,29 +269,24 @@ const Board = (props) => {
 
     const checkWinningCell = (row, col) => {
         for(let i = 0; i<winningCells.length; i++) {
-
         }
-
         if(winningCells.length > 0) {
-            console.log(row, col);
             const isWinningCell = winningCells.findIndex(cell => (cell[0] === row && cell[1] === col));
-
-            console.log(isWinningCell, 'winningCell');
             return isWinningCell;
         }  
     }
 
     return(
-        <div>
-            <button onClick= {() =>{changeStateOfGame(true)}} >Reset game</button>
+        <div className="board-field">
+            <button className="btn btn-info border-primary restart-button" onClick= {() =>{changeStateOfGame(true)}} >New game</button>
             <div className="board_wrapper">
                 {
                     matrix.map((value, indRow) => {
                         return (
-                            <div className="board_row">
+                            <div key={indRow} className="board_row">
                                 {value.map((val, indCol)=> {
                                     return (
-                                        <div 
+                                        <div key={indCol}
                                             onClick={()=>{
                                                 if(!usersMove && mode === "computer") return;
                                                 squareClick(indRow, indCol);
@@ -324,9 +303,6 @@ const Board = (props) => {
                     })
                 }                
             </div>
-
-            <div>{winner ? `Player ${currentPlayer} is a winner! ` : ''}</div>
-            <div>{isDraw ? `Nobody had won! ` : ''}</div>
         </div>
     )
 }

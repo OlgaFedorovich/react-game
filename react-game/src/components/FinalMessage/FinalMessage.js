@@ -7,15 +7,17 @@ const FinalMessage = ({movesCount, currentPlayer, hideFinalMessage, winnerPlayer
         return () => clearTimeout(id);           
     }, []);
 
-    console.log(movesCount, currentPlayer);
     return (
         <div className="final-message-layout">
-            <div className="final-message-wrapper">
-            <div class="alert alert-dismissible alert-info final-message-text">
-                <strong>Game Is Over!</strong>{`${winnerPlayer} player won!`} <a href="#" class="alert-link">{`It was made ${movesCount} moves!`}</a>
-            </div>
-            </div>
-        </div>
+            <div className={`final-message-wrapper ${winnerPlayer === 'Nobody' ? 'draw-message' : 'winning-message'}`}>
+                <div className={`alert alert-dismissible final-message-text ${winnerPlayer === 'Nobody' ? 'alert-danger' : 'alert-info'}`}>
+                    <h3><strong>Game Is Over!</strong></h3>
+                    <div><strong><span className="winner-name text-secondary">{`${winnerPlayer} is winner!`}</span></strong></div>
+                    <div>{`It was made ${movesCount} moves!`}</div>
+                    <div className="text-secondary">Let's play again!</div>
+                </div>
+            </div>   
+        </div> 
     )
 }
 

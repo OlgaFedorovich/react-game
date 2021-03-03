@@ -3,7 +3,6 @@ import './BestResultsPopup.css';
 
 const BestResultsPopup = ({changeBestResultsVisibility}) => {
     const [bestResults, setBestResults] = useState([]);
-    console.log(bestResults);
 
     useEffect(()=> {
         let savedResults;
@@ -13,25 +12,10 @@ const BestResultsPopup = ({changeBestResultsVisibility}) => {
         setBestResults(savedResults);
     }, []);
 
-    return (
-        <div className="best-results-layout">
-            
-            <table class="table table-hover">
-            <button type="button" class="close" data-dismiss="alert" onClick={changeBestResultsVisibility}>&times;</button>
-                <thead>
-                    <tr class="table-light">
-                        <th scope="col">№</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Winner</th>
-                        <th scope="col">Moves</th>
-                        <th scope="col">Board Size</th>
-                        <th scope="col">Mode</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {bestResults.map((result, ind) => {
+    const tableBody = bestResults 
+                    ? (bestResults.map((result, ind) => {
                         return (
-                            <tr class={`${ind % 2 === 0 ? 'table-warning' : 'table-info'}`}>
+                            <tr key={ind} className={`${ind % 2 === 0 ? 'table-warning' : 'table-info'}`}>
                                 <th scope="row">{ind+1}</th>
                                 <td>{result.date}</td>
                                 <td>{result.winner}</td>
@@ -40,13 +24,32 @@ const BestResultsPopup = ({changeBestResultsVisibility}) => {
                                 <td>{result.mode}</td>
                             </tr>
                         )
-                    })}
+                    }))
+                    : null;
 
-                </tbody>
-            </table>
+    return (
+        <div className="best-results-layout">
+            <div className="table-wrapper">
+                <button type="button" className="close" data-dismiss="alert" onClick={changeBestResultsVisibility}>&times;</button>
+                <table className="table table-hover">
+                    <thead>
+                        <tr className="table-light">
+                            <th scope="col">№</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Winner</th>
+                            <th scope="col">Moves</th>
+                            <th scope="col">Board Size</th>
+                            <th scope="col">Mode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tableBody}
+                    </tbody>
+                </table>                
+            </div>
+
 
         </div>
-
     )
 };
 

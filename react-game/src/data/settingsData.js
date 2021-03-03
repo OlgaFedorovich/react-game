@@ -61,4 +61,25 @@ const firstMoveObj = {
     ]
 };
 
-export {playingModesObj, levelsObj, firstMoveObj};
+const playersRoles = {
+    X: {
+        'classic': 'Cross',
+        'react-angular': 'React',
+        'sun-moon': "Moon",
+        'fruits-veggies': 'Fruit',
+        'tom-djerry': 'Tom',
+        'djoker-batman': 'Batman',
+        'winter-summer': 'Winter'
+    },
+    O: {
+        'classic': 'Zero',
+        'react-angular': 'Angular',
+        'sun-moon': "Sun",
+        'fruits-veggies': 'Veggie',
+        'tom-djerry': 'Jerry',
+        'djoker-batman': 'Joker',
+        'winter-summer': 'Summer'
+    }
+}
+
+export {playingModesObj, levelsObj, firstMoveObj, playersRoles};

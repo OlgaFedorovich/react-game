@@ -1,12 +1,16 @@
 import React from 'react';
 
 
-const AudioButton = () => {
+const AudioButtons = ({changeSoundSettingsVisibility}) => {
     return(
-        <div className="header-button btn btn-info">
-            <i class="fa fa-volume-up"></i>
+        <div className= 'sound-buttons-wrapper'>
+
+            <div className="header-button btn btn-info" onClick={changeSoundSettingsVisibility}>
+                <i className="fa fa-volume-up"></i>
+            </div>
         </div>
+
     )
 }
 
-export default AudioButton;
+export default AudioButtons;

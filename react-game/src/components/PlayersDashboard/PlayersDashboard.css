@@ -1,6 +1,7 @@
 .dashboard {
     width: 70%;
     margin-top: 20px;
+    margin-bottom: 0 !important;
 }
 
 .dashboard-header {
@@ -61,4 +62,45 @@
 
 .move-arrow-wrapper {
     position: relative;
+}
+
+.card-player {
+    font-size: 20px;
+    color: rgb(87, 184, 201);
+    font-weight: 700;
+    text-shadow: black 0px 0px 5px ;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px !important;
+}
+
+.dashboard-header {
+    color:rgb(51, 205, 236);
+    font-weight: 700;
+    font-size: 22px;
+    text-shadow: black 0px 0px 3px;
+}
+
+.dashboard-span {
+    color:rgb(247, 251, 252);
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.card-name-wrapper {
+    display: flex;
+}
+
+.card-name-wrapper span {
+    margin: 0px 5px;
+}
+
+@media (max-width: 600px) {
+    .dashboard {
+      width: 80%; 
+      margin-bottom: 10px !important; 
+    }
 }

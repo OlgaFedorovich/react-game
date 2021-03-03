@@ -1,0 +1,61 @@
+body, html, #root {
+    width: 100%;
+    height: 100%;
+}
+.game-container {
+    width: 100%;
+    height: 100%;
+    transition: all 1s;
+}
+
+.game-container.classic {
+    background: url('./../../assets/images/classic-2.jpg') repeat center center/cover;
+}
+
+.game-container.react-angular {
+    background: url('./../../assets/images/react-angular4.png') repeat center center/cover;
+}
+
+.game-container.sun-moon {
+    background: url('./../../assets/images/sun-moon.jpg') repeat center center/cover;
+}
+
+.game-container.fruits-veggies {
+    background: url('./../../assets/images/fruits-vetegables.jpg') repeat center center/cover;
+}
+
+.game-container.tom-djerry{
+    background: url('./../../assets/images/tom-djerry.jpg') repeat center center/cover;
+}
+
+.game-container.djoker-batman{
+    background: url('./../../assets/images/djoker-batman.jpg') repeat center center/cover;
+}
+
+.game-container.winter-summer{
+    background: url('./../../assets/images/winter-summer.jpg') repeat center center/cover;
+}
+
+.game-wrapper {
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    background: rgba(236, 231, 231, 0.5);
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 10px black;
+    flex-direction: column;
+    padding: 10px;
+}
+
+@media (max-width: 1230px) {
+    .game-wrapper {
+        width: 85%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .game-wrapper {
+        width: 100%;
+    }
+}

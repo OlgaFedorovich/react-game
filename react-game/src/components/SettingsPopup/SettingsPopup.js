@@ -4,12 +4,14 @@ import {playingModesObj, levelsObj, firstMoveObj} from './../../data/settingsDat
 
 const SettingsPopup = (props) => {
 
-    const {gameSettings: {mode, matrixSize, move, theme}} = props;
+    const {gameSettings: {mode, matrixSize, move, theme, user, opponent}} = props;
 
     const [selectedMode, setSelectedMode] = useState(mode);
     const [selectedLevel, setSelectedLevel] = useState(matrixSize);
     const [isFirstMoveMine, setIsFirstMoveMine] = useState(move);
     const [selectedGameTheme, setGameTheme] = useState(theme);
+    const [usersName, setUsersName] = useState(user);
+    const [opponentsName, setOpponentsName] = useState(opponent);
 
     const {
         changeSettingsVisibility,
@@ -20,10 +22,10 @@ const SettingsPopup = (props) => {
         <div className = "question-wrapper">
             <p className="text-primary">{playingModesObj.title}</p>    
             <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e)=> setSelectedMode(e.target.value)}>
-            {playingModesObj.options.map((option)=> {
+            {playingModesObj.options.map((option, index)=> {
                 return (
-                    <label className={`btn btn-outline-info ${selectedMode === option.value ? 'active' : ''}`}>
-                        <input type="radio" name={option.name} autocomplete="off" value={option.value} defaultChecked={selectedMode === option.value}/> {option.label}
+                    <label key={index} className={`btn btn-outline-info ${selectedMode === option.value ? 'active' : ''}`}>
+                        <input type="radio" name={option.name} autoComplete="off" value={option.value} defaultChecked={selectedMode === option.value}/> {option.label}
                     </label>
                 )
             })} 
@@ -35,10 +37,10 @@ const SettingsPopup = (props) => {
         <div className = "question-wrapper">
             <p className="text-primary">{levelsObj.title}</p>    
             <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e)=> setSelectedLevel(+e.target.value)}>
-            {levelsObj.options.map((option)=> {
+            {levelsObj.options.map((option, index)=> {
                 return (
-                    <label className={`btn btn-outline-warning ${+selectedLevel === +option.value ? 'active' : ''}`}>
-                        <input type="radio" name={option.name} autocomplete="off" value={option.value} defaultChecked={+selectedLevel === +option.value}/> {option.label}
+                    <label key={index} className={`btn btn-outline-warning ${+selectedLevel === +option.value ? 'active' : ''}`}>
+                        <input type="radio" name={option.name} autoComplete="off" value={option.value} defaultChecked={+selectedLevel === +option.value}/> {option.label}
                     </label>
                 )
             })} 
@@ -50,10 +52,10 @@ const SettingsPopup = (props) => {
         <div className = "question-wrapper">
             <p className="text-primary">{firstMoveObj.title}</p>    
             <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e)=> setIsFirstMoveMine(e.target.value)}>
-            {firstMoveObj.options.map((option)=> {
+            {firstMoveObj.options.map((option, index)=> {
                 return (
-                    <label className={`btn btn-outline-info ${isFirstMoveMine === option.value ? 'active' : ''}`}>
-                        <input type="radio" name={option.name} autocomplete="off" value={option.value} defaultChecked={isFirstMoveMine === option.value}/> {option.label}
+                    <label key={index} className={`btn btn-outline-info ${isFirstMoveMine === option.value ? 'active' : ''}`}>
+                        <input type="radio" name={option.name} autoComplete="off" value={option.value} defaultChecked={isFirstMoveMine === option.value}/> {option.label}
                     </label>
                 )
             })} 
@@ -63,8 +65,8 @@ const SettingsPopup = (props) => {
 
     const themeQuestions = (
         <div className="form-group">
-            <label for="exampleSelect2">Choose playing theme</label>
-            <select multiple="" class="form-control" id="exampleSelect2" value={selectedGameTheme} onChange={(e)=>setGameTheme(e.target.value)}>
+            <label htmlFor="exampleSelect2">Choose playing theme</label>
+            <select multiple="" className="form-control" id="exampleSelect2" value={selectedGameTheme} onChange={(e)=>setGameTheme(e.target.value)}>
                 <option value="classic">Classic</option>
                 <option value="react-angular">Rect vs Angular</option>
                 <option value="sun-moon">Sun vs Moon</option>
@@ -76,12 +78,28 @@ const SettingsPopup = (props) => {
         </div>
     )
 
+    const usersNameInput = (
+        <div className="form-group">
+            <label className="col-form-label" htmlFor="inputDefault">Your name</label>
+            <input type="text" className="form-control" placeholder="Enter Your name" value={usersName} onChange={(e)=>setUsersName(e.target.value)} />
+        </div>
+    )
+
+    const opponentsNameInput = (
+        <div className="form-group">
+            <label className="col-form-label" htmlFor="inputDefault">Your opponent's name</label>
+            <input type="text" className="form-control" placeholder="Enter your opponent's name" value={opponentsName} onChange={(e)=>setOpponentsName(e.target.value)} />
+        </div>
+    )
+
     const saveChanges = () => {
         saveGameSettings({
             mode: selectedMode,
             matrixSize: selectedLevel,
             move: isFirstMoveMine,
-            theme: selectedGameTheme
+            theme: selectedGameTheme,
+            user: usersName,
+            opponent: opponentsName
         })
         changeSettingsVisibility();
     }
@@ -102,8 +120,10 @@ const SettingsPopup = (props) => {
                         {levelQuestions}
                         {movesTurnQuestions}
                         {themeQuestions}
+                        {usersNameInput}
+                        {opponentsNameInput}
                     </div>
-                    <div class="modal-footer">
+                    <div className="modal-footer">
                         <button type="button" className="btn btn-primary" onClick={saveChanges}> Save changes </button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={changeSettingsVisibility}>Close</button>
                     </div>
