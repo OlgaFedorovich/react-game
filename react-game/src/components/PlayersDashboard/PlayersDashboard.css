@@ -1,0 +1,106 @@
+.dashboard {
+    width: 70%;
+    margin-top: 20px;
+    margin-bottom: 0 !important;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-players {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.move-turn {
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+.dashboard-mark {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-mark {
+    display: block;
+}
+
+.card-body, .card-header {
+    padding: 5px;
+}
+
+.dashboard-move-arrow {
+    width: 80px;
+    height: 40px;
+    background: url('./../../assets/images/right-arrow.png') no-repeat center center/70%;
+    position: absolute;
+    top: 50%;
+    transition: all 1.5s;
+}
+
+.dashboard-move-arrow-right {
+    transform: translate(-80%, -50%) rotate(180deg);
+}
+
+.dashboard-move-arrow-left {
+    transform: translate(80%,-50%);
+}
+
+.move-arrow-wrapper {
+    position: relative;
+}
+
+.card-player {
+    font-size: 20px;
+    color: rgb(87, 184, 201);
+    font-weight: 700;
+    text-shadow: black 0px 0px 5px ;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px !important;
+}
+
+.dashboard-header {
+    color:rgb(51, 205, 236);
+    font-weight: 700;
+    font-size: 22px;
+    text-shadow: black 0px 0px 3px;
+}
+
+.dashboard-span {
+    color:rgb(247, 251, 252);
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.card-name-wrapper {
+    display: flex;
+}
+
+.card-name-wrapper span {
+    margin: 0px 5px;
+}
+
+@media (max-width: 600px) {
+    .dashboard {
+      width: 80%; 
+      margin-bottom: 10px !important; 
+    }
+}

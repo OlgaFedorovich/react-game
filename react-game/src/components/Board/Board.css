@@ -1,0 +1,204 @@
+.board_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 380px;
+    height: 380px;
+    line-height: 70px;
+}
+
+.board_row {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    flex: 1 1;
+}
+
+.board_column {
+    flex: 1 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    
+}
+
+.o-player.sun-moon {
+    background-image: url('./../../assets/images/sun.png');
+
+}
+
+.o-player.react-angular {
+    background-image: url('./../../assets/images/angular.png');
+
+}
+
+.o-player.classic {
+    background-image: url('./../../assets/images/zero.png');
+
+}
+
+.o-player.fruits-veggies {
+    background-image: url('./../../assets/images/onion.png');
+}
+
+.o-player.tom-djerry {
+    background-image: url('./../../assets/images/djerry.jpg');
+}
+
+.o-player.djoker-batman {
+    background-image: url('./../../assets/images/djoker.png');
+}
+
+.o-player.winter-summer {
+    background-image: url('./../../assets/images/summer2.png');
+}
+
+.x-player.sun-moon {
+    background-image: url('./../../assets/images/moon.png');
+
+}
+
+.x-player.react-angular {
+    background-image: url('./../../assets/images/react.png');
+
+}
+
+.x-player.classic {
+    background-image: url('./../../assets/images/cross.png');
+
+}
+
+.x-player.fruits-veggies {
+    background-image: url('./../../assets/images/pineapple.png');
+}
+
+.x-player.tom-djerry {
+    background-image: url('./../../assets/images/tom.png');
+}
+
+.x-player.djoker-batman {
+    background-image: url('./../../assets/images/batman.png');
+}
+
+.x-player.winter-summer {
+    background-image: url('./../../assets/images/winter.png');
+}
+
+.player-mark {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: all 1s;
+}
+
+.board_column.jumbotron {
+    margin: 0;
+    padding: 0;
+    background: rgba(224, 220, 220, 0.7);
+}
+
+.board_column.jumbotron.winning {
+    transition: all 0.5s;
+    background: rgb(245, 217, 55);
+    box-shadow: 0px 0px 5px rgb(53, 201, 201);
+    transform: scale(1.1);
+    animation: shake 9s linear forwards;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(124, 221, 221);
+        
+    }
+    10% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 10px rgb(12, 12, 12);
+    }
+    20% {
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(53, 201, 201);
+    }
+    30% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 10px rgb(26, 27, 27);
+    }
+    40% {
+
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(53, 201, 201);
+    }
+    50% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 10px rgb(21, 22, 22);
+    }
+    60% {
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(53, 201, 201);
+    }
+    70% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 10px rgb(13, 14, 14);
+    }
+    80% {
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(53, 201, 201);
+    }
+    90% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 10px rgb(12, 12, 12);
+    }
+    100% {
+        transform: rotate(10deg);
+        box-shadow: 0px 0px 20px rgb(53, 201, 201);
+    }
+}
+
+.restart-button {
+    font-weight: 700;
+    font-size: 25px;
+    margin: 0 auto 10px;
+    display: block;
+}
+
+.board-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 650px) {
+    .board_wrapper {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 610px) {
+    .board_wrapper {
+        width: 320px;
+        height: 320px;
+        margin: 20px 0px;
+    }
+}
+
+@media (max-width: 550px) {
+    .board_wrapper {
+        width: 300px;
+        height: 300px;
+        margin: 20px 0px;
+    }
+}
+
+@media (max-width: 530px) {
+    .board_wrapper {
+        width: 280px;
+        height: 280px;
+        margin: 20px 0px;
+    }
+}

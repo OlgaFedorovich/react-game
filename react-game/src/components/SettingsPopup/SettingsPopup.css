@@ -1,0 +1,22 @@
+.settings-layout {
+    width: 100%;
+    min-height: 100%;
+    position:absolute;
+    top:0;
+    left: 0;
+    background: rgba(19, 18, 18, 0.8);
+    z-index: 2;
+}
+
+.modal {
+    display: block;
+}
+
+.question-wrapper {
+    margin-bottom: 20px;
+}
+
+p.text-primary {
+    font-size: 18px;
+    margin-bottom: 5px;
+}

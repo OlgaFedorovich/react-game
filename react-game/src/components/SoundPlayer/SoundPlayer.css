@@ -1,0 +1,131 @@
+.sound-player-wrapper {
+    position: absolute;
+    top: 100px;
+    left: 16%;
+}
+
+.close-popup {
+    z-index: 10;
+    position: absolute;
+    right: 10px;
+    top: 10px
+}
+
+.sound-player-wrapper.player-hidden audio::-webkit-media-controls-timeline {
+    display: none;
+}
+
+.sound-player-wrapper.player-hidden audio {
+    width: 100px !important;
+}
+
+.sound-player-wrapper.player-hidden .sound-player-details {
+    display: none;
+}
+
+.controls-buttons-wrapper button {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0px 0px 5px black;
+    cursor: pointer;
+}
+
+.controls-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.controls-button-small {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+}
+
+.controls-button-big {
+    width: 50px;
+    height: 50px;
+    margin: 0px 10px;
+}
+
+audio::-webkit-media-controls-current-time-display {
+    display: none;
+}
+
+audio::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+
+audio.audio-player-wrapper{
+    width: 200px !important;
+}
+
+.sound-player-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;   
+}
+
+.sound-player-details .card-title {
+    margin-bottom: 0px !important;
+    font-size: 20px;
+}
+
+.sound-player-details .card-text {
+    margin-bottom: 5px;
+}
+
+.sound-close-button {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    border: none;
+    background: transparent;
+    z-index: 1;
+}
+
+@media (max-width: 1230px) {
+    .sound-player-wrapper {
+        left: 8%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sound-player-wrapper {
+        left: 2%;
+    }
+}
+
+@media (max-width: 900px) {
+    .sound-player-wrapper {
+        left: 1%;
+    }
+
+    audio.audio-player-wrapper{
+        width: 100px !important;
+    }
+
+    .sound-player-wrapper audio::-webkit-media-controls-timeline {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .sound-player-wrapper.player-hidden audio {
+        width: 90px !important;
+    }
+    
+    .sound-player-wrapper .sound-player-details {
+        display: none;
+    }
+
+    .sound-player-wrapper audio {
+        width: 90px !important;
+    }
+
+}
